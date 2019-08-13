@@ -51,13 +51,13 @@ processResources {
 
     	from(sourceSets.main.resources.srcDirs) {
    	  	include "fabric.mod.json"
-        	expand "version": project.version, "modid": "luminiferous_uplands"
+        	expand "version": project.version, "modid": "coniferous"
     	}
 
     	from(sourceSets.main.resources.srcDirs) {
         	exclude "fabric.mod.json"
         	include "**/*.json"
-        	expand "modid": "luminiferous_uplands"
+        	expand "modid": "coniferous"
     	}
 
     	from(sourceSets.main.resources.srcDirs) {
