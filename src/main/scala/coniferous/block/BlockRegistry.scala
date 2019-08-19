@@ -4,15 +4,18 @@ import coniferous.Coniferous
 import net.minecraft.block.Block
 import net.minecraft.item.{BlockItem, Item}
 import net.minecraft.util.registry.Registry
+import org.apache.logging.log4j.{LogManager, Logger}
 
 import scala.collection.mutable
 
 object BlockRegistry {
+  val logger: Logger = LogManager.getLogger()
 
   val registrants: mutable.ListBuffer[BlockEntry] = mutable.ListBuffer.empty[BlockEntry]
   val entries: mutable.Map[String, Block] = mutable.HashMap.empty[String, Block]
 
   def init(): Unit = registrants.foreach { case BlockEntry(name, block, item) =>
+    logger.debug(s"Registering $name")
     entries(name) = Registry.register(Registry.BLOCK, Coniferous :/ name, block)
     item.foreach(i => Registry.register(Registry.ITEM, Coniferous :/ name, i))
   }

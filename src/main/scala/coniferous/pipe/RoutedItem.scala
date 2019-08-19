@@ -5,4 +5,4 @@ import net.minecraft.util.math.Direction
 
 case class RoutedItem(stack: ItemStack, from: Direction, routing: RoutingInformation)
 
-trait RoutingInformation
+case class RoutingInformation(var nodes: List[Direction])
