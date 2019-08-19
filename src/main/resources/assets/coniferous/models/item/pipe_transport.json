@@ -1,0 +1,6 @@
+{
+  "parent": "coniferous:item/pipe",
+  "textures": {
+    "main": "coniferous:pipe_transport"
+  }
+}

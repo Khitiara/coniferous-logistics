@@ -44,7 +44,7 @@ object ModelUtil {
 
   def createFace(face: Direction, a: Vec3d, b: Vec3d, c: Vec3d, d: Vec3d, uvs1: UvFaceData): MutableQuad = {
     val quad = new MutableQuad(-1, face)
-    var uvs = if (uvs1 == null) UvFaceData.DEFAULT else uvs1
+    val uvs = if (uvs1 == null) UvFaceData.DEFAULT else uvs1
     if (face == null || shouldInvertForRender(face)) {
       quad.vertex_0.positionv(a).texf(uvs.minU, uvs.minV)
       quad.vertex_1.positionv(b).texf(uvs.minU, uvs.maxV)

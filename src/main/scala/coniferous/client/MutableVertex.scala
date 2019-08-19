@@ -154,46 +154,46 @@ import scala.collection.JavaConverters._
         case VertexFormatElement.Type.POSITION =>
           assert(elem.getFormat == Format.FLOAT)
           position_x = JFloat.intBitsToFloat(data({
-            o += 1;
+            o += 1
             o - 1
           }))
           position_y = JFloat.intBitsToFloat(data({
-            o += 1;
+            o += 1
             o - 1
           }))
           position_z = JFloat.intBitsToFloat(data({
-            o += 1;
+            o += 1
             o - 1
           }))
 
         case VertexFormatElement.Type.COLOR =>
           assert(elem.getFormat == Format.UBYTE)
           colouri(data({
-            o += 1;
+            o += 1
             o - 1
           }))
 
         case VertexFormatElement.Type.NORMAL =>
           assert(elem.getFormat == Format.BYTE)
           normali(data({
-            o += 1;
+            o += 1
             o - 1
           }))
 
         case VertexFormatElement.Type.UV =>
           if (elem.getIndex == 0) {
             tex_u = JFloat.intBitsToFloat(data({
-              o += 1;
+              o += 1
               o - 1
             }))
             tex_v = JFloat.intBitsToFloat(data({
-              o += 1;
+              o += 1
               o - 1
             }))
           }
           else if (elem.getIndex == 1) {
             lighti(data({
-              o += 1;
+              o += 1
               o - 1
             }))
           }
@@ -340,7 +340,6 @@ import scala.collection.JavaConverters._
     this
   }
 
-  /** Multiplies the colour by {@link MutableQuad#diffuseLight(float, float, float)} for the normal. */
   def multShade: MutableVertex = multColourd(MutableQuad.diffuseLight(normal_x, normal_y, normal_z))
 
   def multColourd(d: Double): MutableVertex = {
@@ -432,7 +431,6 @@ import scala.collection.JavaConverters._
     position_x *= x
     position_y *= y
     position_z *= z
-    // TODO: scale normals?
     this
   }
 

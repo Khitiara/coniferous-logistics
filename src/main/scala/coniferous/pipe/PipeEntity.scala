@@ -47,7 +47,7 @@ class PipeEntity(beType: BlockEntityType[_ <: PipeEntity]) extends BlockEntity(b
 
 object PipeEntity {
   val tpe: BlockEntityType[PipeEntity] = BlockEntityType.Builder.create(() => new PipeEntity(tpe), BlockPipe).build(null)
-  var kinds: Map[PipeType.Value, (BlockPos, World) => Pipe] = Map.empty
+  val kinds: Map[PipeType.Value, (BlockPos, World) => Pipe] = Map.empty
 
   case class PipeRenderData(connections: util.EnumSet[Direction], pipe: Pipe, state: BlockState, kind: PipeType.Value) {
     def isConnected(face: Direction): Boolean = connections.contains(face)
