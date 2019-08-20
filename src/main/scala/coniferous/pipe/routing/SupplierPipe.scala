@@ -19,7 +19,7 @@ case class SupplierPipe(pos: BlockPos, world: World) extends SidedPipe {
 
   //  override def routeItem(connections: util.EnumSet[Direction], item: RoutedItem, from: Direction): Option[Direction] = ???
 
-  override def canConnect(connections: util.EnumSet[Direction], state: BlockState): Boolean = state.getBlock.isInstanceOf[BlockPipe]
+  override def canConnect(connections: util.EnumSet[Direction], state: BlockState, face: Direction): Boolean = state.getBlock.isInstanceOf[BlockPipe]
 
   override def toTag[T](ops: DynamicOps[T]): datafixers.Dynamic[T] = new datafixers.Dynamic[T](ops, ops.createMap(
     ImmutableMap.of(ops.createString("MainSide"), ops.createInt(mSide.getId))))
@@ -27,4 +27,6 @@ case class SupplierPipe(pos: BlockPos, world: World) extends SidedPipe {
   override def fromTag(tag: datafixers.Dynamic[_]): Unit = {
     mSide = Direction.byId(tag.get("MainSide").asInt(0))
   }
+
+  override def canMainSide(dir: Direction): Boolean = PipeUtils.getInventory(pos.offset(dir), world).nonEmpty
 }

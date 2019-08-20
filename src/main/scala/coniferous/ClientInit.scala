@@ -24,6 +24,7 @@ object ClientInit extends ClientModInitializer {
     def reg(name: String): Unit = registry.register(Coniferous :/ name)
 
     reg("pipe_transport")
+    reg("pipe_junction")
     reg("pipe_provider")
     reg("pipe_provider_main")
     reg("pipe_supplier")

@@ -14,15 +14,11 @@ import scala.collection.JavaConverters._
 case class TransportPipe(pos: BlockPos, world: World) extends Pipe {
   override def name: String = "transport"
 
-  override def canConnect(connections: util.EnumSet[Direction], state: BlockState): Boolean =
-    state.getBlock.isInstanceOf[BlockPipe]
+  override def canConnect(connections: util.EnumSet[Direction], state: BlockState, face: Direction): Boolean =
+    connections.contains(face) || state.getBlock.isInstanceOf[BlockPipe] && connections.size() < 2
 
-
-  override def routeItem(connections: util.EnumSet[Direction], item: RoutedItem, from: Direction): Option[Direction] = {
-    if (connections.size() == 2) {
-      connections.asScala.find(_ != from)
-    } else super.routeItem(connections, item, from)
-  }
+  override def routeItem(connections: util.EnumSet[Direction], item: RoutedItem, from: Direction): Option[Direction] =
+    connections.asScala.find(_ != from)
 
   override def toTag[T](ops: DynamicOps[T]): datafixers.Dynamic[T] = new datafixers.Dynamic[T](ops, ops.empty())
 

@@ -2,10 +2,9 @@ package coniferous.pipe
 
 import java.util
 
-import com.mojang.datafixers.types.DynamicOps
 import com.mojang.datafixers.Dynamic
+import com.mojang.datafixers.types.DynamicOps
 import net.minecraft.block.BlockState
-import net.minecraft.nbt.CompoundTag
 import net.minecraft.util.math.Direction
 
 trait Pipe {
@@ -23,7 +22,7 @@ trait Pipe {
       case Nil => None
     }
 
-  def canConnect(connections: util.EnumSet[Direction], state: BlockState): Boolean
+  def canConnect(connections: util.EnumSet[Direction], state: BlockState, face: Direction): Boolean
 
   def toTag[T](ops: DynamicOps[T]): Dynamic[T]
 
@@ -32,4 +31,6 @@ trait Pipe {
 
 trait SidedPipe extends Pipe {
   def mainSide: Direction
+
+  def canMainSide(dir: Direction): Boolean
 }
