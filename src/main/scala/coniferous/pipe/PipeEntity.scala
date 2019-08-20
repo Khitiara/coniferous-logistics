@@ -64,10 +64,6 @@ class PipeEntity(beType: BlockEntityType[_ <: PipeEntity]) extends BlockEntity(b
 
   override def fromClientTag(compoundTag: CompoundTag): Unit = {
     fromTag(compoundTag)
-    connections.clear()
-    connections.addAll(BitSet.fromBitMask(Array(compoundTag.getLong("Connections")))
-      .map(Direction.byId).asJavaCollection)
-    pipeData = compoundTag.getTag("PipeData")
     refreshModel()
   }
 
@@ -78,24 +74,27 @@ class PipeEntity(beType: BlockEntityType[_ <: PipeEntity]) extends BlockEntity(b
   override def tick(): Unit = {
   }
 
-  override def fromTag(compoundTag_1: CompoundTag): Unit = {
-    super.fromTag(compoundTag_1)
-    fromClientTag(compoundTag_1)
+  override def fromTag(compoundTag: CompoundTag): Unit = {
+    super.fromTag(compoundTag)
+    connections.clear()
+    connections.addAll(BitSet.fromBitMask(Array(compoundTag.getLong("Connections")))
+      .map(Direction.byId).asJavaCollection)
+    pipeData = compoundTag.getTag("PipeData")
   }
 
   case class PipeEntityState(pipe: Pipe)
 
   override def toClientTag(compoundTag: CompoundTag): CompoundTag = {
+    toTag(compoundTag)
+  }
+
+  override def toTag(compoundTag: CompoundTag): CompoundTag = {
+    super.toTag(compoundTag)
     compoundTag.putLong("Connections", connections.asScala.map(_.getId).foldLeft(BitSet.empty)((s, i) => s + i)
       .toBitMask(0))
     if (pipe != null) pipeData = pipe.toTag(NbtOps.INSTANCE).getValue else pipeData = new EndTag
     compoundTag.put("PipeData", pipeData)
-    toTag(compoundTag)
-  }
-
-  override def toTag(compoundTag_1: CompoundTag): CompoundTag = {
-    super.toTag(compoundTag_1)
-    toClientTag(compoundTag_1)
+    compoundTag
   }
 
   protected def refreshModel(): Unit = {
