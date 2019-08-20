@@ -20,26 +20,19 @@ import scala.collection.JavaConverters._
 }
 
 @Environment(EnvType.CLIENT) class MutableVertex() {
-  normal_x = 0
-  normal_y = 1
-  normal_z = 0
-  colour_r = 0xFF
-  colour_g = 0xFF
-  colour_b = 0xFF
-  colour_a = 0xFF
   /** The position of this vertex. */
   var position_x: Float = .0f
   var position_y: Float = .0f
   var position_z: Float = .0f
   /** The normal of this vertex. Might not be normalised. Default value is [0, 1, 0]. */
   var normal_x: Float = .0f
-  var normal_y: Float = .0f
+  var normal_y: Float = 1.0f
   var normal_z: Float = .0f
   /** The colour of this vertex, where each one is a number in the range 0-255. Default value is 255. */
-  var colour_r = 0
-  var colour_g = 0
-  var colour_b = 0
-  var colour_a = 0
+  var colour_r = 0xff
+  var colour_g = 0xff
+  var colour_b = 0xff
+  var colour_a = 0xff
   /** The texture co-ord of this vertex. Should usually be between 0-1 */
   var tex_u: Float = .0f
   var tex_v: Float = .0f
