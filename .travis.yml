@@ -1,0 +1,10 @@
+
+language: scala
+scala:
+  - 2.13.0
+dist: trusty
+jdk:
+  - oraclejdk8
+  - openjdk8
+  - oraclejdk11
+  - openjdk11
