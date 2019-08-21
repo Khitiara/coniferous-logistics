@@ -16,7 +16,7 @@ import net.minecraft.datafixers.NbtOps
 import net.minecraft.nbt.{CompoundTag, EndTag, Tag}
 import net.minecraft.server.world.ServerWorld
 import net.minecraft.util.Tickable
-import net.minecraft.util.math.{BlockPos, Direction}
+import net.minecraft.util.math.{BlockPos, ChunkPos, Direction}
 import net.minecraft.world.World
 
 import scala.collection.JavaConverters._
@@ -55,9 +55,8 @@ class PipeEntity(beType: BlockEntityType[_ <: PipeEntity]) extends BlockEntity(b
           case _ => true
         })
       } connections.add(face)
-      oldConns.asScala.filter(!connections.contains(_)).foreach { dir =>
-        world.typedBlockEntity[PipeEntity](pos.offset(dir)).foreach(_.fixConnections())
-      }
+      oldConns.asScala.diff(connections.asScala).union(connections.asScala.diff(oldConns.asScala))
+        .foreach(dir => world.typedBlockEntity[PipeEntity](pos.offset(dir)).foreach(_.fixConnections()))
     }
     refreshModel()
   }
@@ -102,7 +101,9 @@ class PipeEntity(beType: BlockEntityType[_ <: PipeEntity]) extends BlockEntity(b
     world match {
       case clientWorld: ClientWorld =>
         clientWorld.scheduleBlockRenders(pos.getX >> 4, pos.getY >> 4, pos.getZ >> 4)
-      case _: ServerWorld =>
+      case serverWorld: ServerWorld =>
+        serverWorld.method_14178().threadedAnvilChunkStorage.getPlayersWatchingChunk(new ChunkPos(pos), false)
+          .forEach(player => player.networkHandler.sendPacket(toUpdatePacket))
     }
   }
 }
