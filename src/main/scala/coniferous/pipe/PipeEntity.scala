@@ -22,7 +22,7 @@ import net.minecraft.world.World
 import scala.collection.JavaConverters._
 import scala.collection.immutable.BitSet
 
-class PipeEntity(beType: BlockEntityType[_ <: PipeEntity]) extends BlockEntity(beType) with Tickable
+class PipeEntity extends BlockEntity(PipeEntity.tpe) with Tickable
   with BlockEntityClientSerializable {
 
   val setup: AtomicBoolean = new AtomicBoolean()
@@ -109,7 +109,7 @@ class PipeEntity(beType: BlockEntityType[_ <: PipeEntity]) extends BlockEntity(b
 }
 
 object PipeEntity {
-  val tpe: BlockEntityType[PipeEntity] = BlockEntityType.Builder.create(() => new PipeEntity(tpe), BlockPipe.kinds
+  val tpe: BlockEntityType[PipeEntity] = BlockEntityType.Builder.create(() => new PipeEntity, BlockPipe.kinds
     .values.toSeq: _*).build(null)
   val kinds: Map[PipeType.Value, (BlockPos, World) => Pipe] = Map(
     PipeType.transport -> TransportPipe.apply,
