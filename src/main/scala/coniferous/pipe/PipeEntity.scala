@@ -78,6 +78,7 @@ class PipeEntity extends BlockEntity(PipeEntity.tpe) with Tickable
     connections.clear()
     connections.addAll(BitSet.fromBitMask(Array(compoundTag.getLong("Connections")))
       .map(Direction.byId).asJavaCollection)
+    kind = PipeEntity.PipeType.withName(compoundTag.getString("PipeKind"))
     pipeData = compoundTag.getTag("PipeData")
   }
 
@@ -93,6 +94,7 @@ class PipeEntity extends BlockEntity(PipeEntity.tpe) with Tickable
       .toBitMask(0))
     if (pipe != null) pipeData = pipe.toTag(NbtOps.INSTANCE).getValue else pipeData = new EndTag
     compoundTag.put("PipeData", pipeData)
+    compoundTag.putString("PipeKind", kind.toString)
     compoundTag
   }
 

@@ -10,7 +10,6 @@ import net.minecraft.util.registry.Registry
 
 object Coniferous extends ModInitializer {
   val modid = "coniferous"
-  //noinspection ForwardReference
   val group: ItemGroup = FabricItemGroupBuilder.create(this :/ "general").icon(() => new ItemStack(BlockPipe
     .kinds(PipeEntity.PipeType.transport))).build()
 
