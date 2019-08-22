@@ -13,7 +13,7 @@ import net.minecraft.block.entity.{BlockEntity, BlockEntityType}
 import net.minecraft.block.{Block, BlockState}
 import net.minecraft.client.world.ClientWorld
 import net.minecraft.datafixers.NbtOps
-import net.minecraft.nbt.{CompoundTag, EndTag, Tag}
+import net.minecraft.nbt.{CompoundTag, IntTag, Tag}
 import net.minecraft.server.world.ServerWorld
 import net.minecraft.util.Tickable
 import net.minecraft.util.math.{BlockPos, ChunkPos, Direction}
@@ -92,7 +92,7 @@ class PipeEntity extends BlockEntity(PipeEntity.tpe) with Tickable
     super.toTag(compoundTag)
     compoundTag.putLong("Connections", connections.asScala.map(_.getId).foldLeft(BitSet.empty)((s, i) => s + i)
       .toBitMask(0))
-    if (pipe != null) pipeData = pipe.toTag(NbtOps.INSTANCE).getValue else pipeData = new EndTag
+    if (pipe != null) pipeData = pipe.toTag(NbtOps.INSTANCE).getValue else pipeData = new IntTag(0)
     compoundTag.put("PipeData", pipeData)
     compoundTag.putString("PipeKind", kind.toString)
     compoundTag

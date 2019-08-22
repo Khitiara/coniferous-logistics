@@ -20,7 +20,7 @@ case class TransportPipe(pos: BlockPos, world: World) extends Pipe {
   override def routeItem(connections: util.EnumSet[Direction], item: RoutedItem, from: Direction): Option[Direction] =
     connections.asScala.find(_ != from)
 
-  override def toTag[T](ops: DynamicOps[T]): datafixers.Dynamic[T] = new datafixers.Dynamic[T](ops, ops.empty())
+  override def toTag[T](ops: DynamicOps[T]): datafixers.Dynamic[T] = new datafixers.Dynamic[T](ops, ops.createInt(0))
 
   override def fromTag(tag: datafixers.Dynamic[_]): Unit = {}
 }
